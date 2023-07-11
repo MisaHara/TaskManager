@@ -29,14 +29,29 @@ public class TaskController {
         model.addAttribute("task", new Task());
         return "task-form";
     }
-    @GetMapping("/update-task")
-    public String updateTaskForm(Model model){
+    @GetMapping("/update-task/{id}")
+    public String updateTaskForm(@PathVariable String id, Model model) {
+        Task task = taskService.getTaskById(id);
+        model.addAttribute("task", task);
         return "update-form";
     }
 
     @PostMapping("/create-task")
     public String createTask(@ModelAttribute Task task) {
         taskService.addTask(task);
+        return "redirect:/tasks";
+    }
+
+    @GetMapping("/edit-task/{id}")
+    public String editTaskForm(@PathVariable String id, Model model) {
+        Task task = taskService.getTaskById(id);
+        model.addAttribute("task", task);
+        return "edit-form";
+    }
+
+    @PostMapping("/update-task")
+    public String updateTask(@ModelAttribute Task task) {
+        taskService.updateTask(task);
         return "redirect:/tasks";
     }
 }

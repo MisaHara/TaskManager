@@ -19,6 +19,7 @@
         <td th:text="${task.description}"></td>
         <td th:text="${task.priority}"></td>
         <td th:text="${task.status}"></td>
+        <td><a th:href="@{/edit-task/{id}(id=${task.id})}">Edit</a></td>
     </tr>
     <form action="/create-task" method="get">
         <button type="submit">Create Task</button>

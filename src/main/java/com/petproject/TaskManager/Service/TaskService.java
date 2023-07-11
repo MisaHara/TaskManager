@@ -13,9 +13,29 @@ public class TaskService {
     public List<Task> getAllTasks() {
         return tasks;
     }
+    public Task getTaskById(String id) {
+        for (Task task : tasks) {
+            if (task.getId().equals(id)) {
+                return task;
+            }
+        }
+        return null;
+    }
+
 
     public void addTask(Task task) {
         task.setId(String.valueOf(nextId++));
         tasks.add(task);
+    }
+    public void updateTask(Task updatedTask) {
+        for (Task task : tasks) {
+            if (task.getId().equals(updatedTask.getId())) {
+                task.setName(updatedTask.getName());
+                task.setDescription(updatedTask.getDescription());
+                task.setPriority(updatedTask.getPriority());
+                task.setStatus(updatedTask.getStatus());
+                return;
+            }
+        }
     }
 }
