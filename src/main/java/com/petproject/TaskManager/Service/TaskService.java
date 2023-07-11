@@ -38,4 +38,35 @@ public class TaskService {
             }
         }
     }
+
+    public void deleteTask(String id) {
+        Task taskToRemove = null;
+        for (Task task : tasks) {
+            if (task.getId().equals(id)) {
+                taskToRemove = task;
+                break;
+            }
+        }
+        if (taskToRemove != null) {
+            tasks.remove(taskToRemove);
+            updateNextId();
+        }
+    }
+
+    private void updateNextId() {
+        if (tasks.isEmpty()) {
+            nextId = 1;
+        } else {
+            int maxId = Integer.MIN_VALUE;
+            for (Task task : tasks) {
+                int taskId = Integer.parseInt(task.getId());
+                if (taskId > maxId) {
+                    maxId = taskId;
+                }
+            }
+            nextId = maxId + 1;
+        }
+    }
+
+
 }

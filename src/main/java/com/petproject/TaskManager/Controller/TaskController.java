@@ -5,10 +5,11 @@ import com.petproject.TaskManager.Service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Validated
 @Controller
 public class TaskController {
 
@@ -54,4 +55,18 @@ public class TaskController {
         taskService.updateTask(task);
         return "redirect:/tasks";
     }
+
+
+    @GetMapping("/delete-task/{id}")
+    public String deleteTask(@PathVariable String id) {
+        taskService.deleteTask(id);
+        return "redirect:/tasks";
+    }
+
+//    @GetMapping("/confirm-delete-task/{id}")
+//    public String showDeleteConfirmation(@PathVariable String id, Model model) {
+//        Task task = taskService.getTaskById(id);
+//        model.addAttribute("task", task);
+//        return "delete-confirmation";
+//    }
 }
