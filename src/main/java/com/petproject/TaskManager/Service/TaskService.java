@@ -3,8 +3,9 @@ package com.petproject.TaskManager.Service;
 import com.petproject.TaskManager.Model.Task;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+
 @Service
 public class TaskService {
     private List<Task> tasks = new ArrayList<>();
@@ -68,5 +69,34 @@ public class TaskService {
         }
     }
 
+    public List<Task> searchTasks(String keyword, String id, String status) {
+        List<Task> searchResults = new ArrayList<>();
+
+        // Фильтрация задач на основе ключевого слова (названия)
+        if (keyword != null && !keyword.isEmpty()) {
+            List<Task> keywordMatches = tasks.stream()
+                    .filter(task -> task.getName().contains(keyword))
+                    .collect(Collectors.toList());
+            searchResults.addAll(keywordMatches);
+        }
+
+        // Фильтрация задач по ID
+        if (id != null && !id.isEmpty()) {
+            Task taskById = getTaskById(id);
+            if (taskById != null) {
+                searchResults.add(taskById);
+            }
+        }
+
+        // Фильтрация задач по статусу
+        if (status != null && !status.isEmpty()) {
+            List<Task> statusMatches = tasks.stream()
+                    .filter(task -> task.getStatus().equalsIgnoreCase(status))
+                    .collect(Collectors.toList());
+            searchResults.addAll(statusMatches);
+        }
+
+        return searchResults;
+    }
 
 }

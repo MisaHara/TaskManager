@@ -3,11 +3,13 @@ package com.petproject.TaskManager.Controller;
 import com.petproject.TaskManager.Model.Task;
 import com.petproject.TaskManager.Service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 @Validated
 @Controller
@@ -63,10 +65,14 @@ public class TaskController {
         return "redirect:/tasks";
     }
 
-//    @GetMapping("/confirm-delete-task/{id}")
-//    public String showDeleteConfirmation(@PathVariable String id, Model model) {
-//        Task task = taskService.getTaskById(id);
-//        model.addAttribute("task", task);
-//        return "delete-confirmation";
-//    }
+    @GetMapping("/search")
+    public String searchTasks(@RequestParam(name = "keyword", required = false) String keyword,
+                              @RequestParam(name = "id", required = false) String id,
+                              @RequestParam(name = "status", required = false) String status,
+                              Model model) {
+        List<Task> searchResults = taskService.searchTasks(keyword, id, status);
+        model.addAttribute("searchResults", searchResults);
+        return "search-results";
+    }
 }
+

@@ -15,4 +15,8 @@ public class Task {
     public Task() {
         this.id = UUID.randomUUID().toString();
     }
+
+    public Object getDateCreated() {
+        return null;
+    }
 }
