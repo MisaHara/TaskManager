@@ -19,5 +19,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/search").setViewName("search-form");
+        registry.addViewController("/login").setViewName("login");
     }
 }

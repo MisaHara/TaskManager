@@ -19,7 +19,10 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-
+    @GetMapping("/")
+    public String hellopage(){
+        return "home";
+    }
     @GetMapping("/tasks")
     public String getAllTasks(Model model){
         List<Task> tasks = taskService.getAllTasks();
